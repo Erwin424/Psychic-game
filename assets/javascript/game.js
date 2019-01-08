@@ -1,46 +1,51 @@
+
 var computerChoices = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
-    
-    
-    i = 0
-    var winTimes = i;
-    document.getElementById("win").innerHTML =
-    "Win: " + i;
+  
+    var winTimes = 0;
 
-    j = 0;
-    var loseTimes = j;
-    document.getElementById("lose").innerHTML =
-    "Lose: " + j;
+    var loseTimes = 0;
 
-    k = 10 - usedTimes;
-    var usedTimes = 0;
-    var k = usedTimes;
-    document.getElementById("left").innerHTML =
-    "Guesses left: " + k;
+    var guessesToGo = 10;
+
+    var guessArray = [];
     
-        // This function is run whenever the user presses a key.
-        document.onkeyup = function(event) {
-    
-          // Determines which key was pressed.
-          var userGuess = event.key;
-    
-          // Randomly chooses a choice from the options array. This is the Computer's guess.
-          var computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
-    
-          // Reworked our code from last step to use "else if" instead of lots of if statements.
-    
-          // This logic determines the outcome of the game (win/loss/tie), and increments the appropriate number
-          if ((userGuess === "a") || (userGuess === "b") || (userGuess === "c") || (userGuess === "d") || (userGuess === "e") || (userGuess === "f") || (userGuess === "g") || (userGuess === "h") || (userGuess === "i") || (userGuess === "j") || (userGuess === "k") || (userGuess === "l") || (userGuess === "m") || (userGuess === "n") || (userGuess === "o") || (userGuess === "p") || (userGuess === "q") || (userGuess === "r") || (userGuess === "s") || (userGuess === "t") || (userGuess === "u") || (userGuess === "v") || (userGuess === "w") || (userGuess === "x") || (userGuess === "y") || (userGuess === "z")) {
-    
-            if ((userGuess === computerGuess)) {
-              i++, k++;
-            } else {
-              j++, k++;
-            }
-    
-            // Display the user and computer guesses, and wins/losses/ties.
-            document.getElementById("win").innerHTML = "Win: " + i;
-            document.getElementById("lose").innerHTML = "Lose: " + j;
-            document.getElementById("left").innerHTML = "Guesses left: " + k;
-            document.getElementById("record").innerHTML = "Your guesses so far: " + userGuess;
-          }
-        };
+    // Create Variables that determine which option was chosen from the array by computer
+    var computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+
+    // Create Document that holds the function of keyboard event 
+    document.onkeyup = function(event) {
+
+      // Create Variables that determine which key was pressed by user
+      var userGuess = event.key;
+
+      // **Create Conditional Statement that determine the outcome of the matching
+      if ((userGuess === "a") || (userGuess === "b") || (userGuess === "c") || (userGuess === "d") || (userGuess === "e") || (userGuess === "f") || (userGuess === "g") || (userGuess === "h") || (userGuess === "i") || (userGuess === "j") || (userGuess === "k") || (userGuess === "l") || (userGuess === "m") || (userGuess === "n") || (userGuess === "o") || (userGuess === "p") || (userGuess === "q") || (userGuess === "r") || (userGuess === "s") || (userGuess === "t") || (userGuess === "u") || (userGuess === "v") || (userGuess === "w") || (userGuess === "x") || (userGuess === "y") || (userGuess === "z")) {
+
+        if (userGuess === computerGuess) {
+          //Win
+          winTimes++;
+          guessesToGo = 10; 
+          guessArray = [];
+          computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+        } else if (guessesToGo === 0) {
+          //Lose
+          loseTimes++;
+          guessesToGo = 10; 
+          guessArray = [];
+          computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+        } else {
+          // Guess wrong
+          guessesToGo--;
+          guessArray.push(userGuess);
+        }
+        
+      }  
+
+      // *Create Variables that display(print) of guesses and matching results
+      document.getElementById("win").innerHTML = winTimes;
+      document.getElementById("lose").innerHTML = loseTimes;
+      document.getElementById("left").innerHTML = guessesToGo;
+      document.getElementById("record").innerHTML = guessArray;
+
+    }
+      
